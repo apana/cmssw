@@ -68,6 +68,7 @@ namespace l1t {
   public:
     explicit GtRecordDump(const edm::ParameterSet&);
     virtual ~GtRecordDump(){};
+
     virtual void analyze(const edm::Event&, const edm::EventSetup&);
     virtual void endRun(edm::Run const&, edm::EventSetup const&) override;
 
@@ -843,6 +844,20 @@ unsigned int GtRecordDump::formatTotalET(std::vector<l1t::EtSum>::const_iterator
 
 // Pack Bits
   packedVal |= ((etSum->hwPt()     & 0xfff)   <<0);
+
+  return packedVal;
+}
+
+unsigned int GtRecordDump::formatTowerCounts(std::vector<l1t::EtSum>::const_iterator etSum){
+
+  unsigned int packedVal = 0;
+  //unsigned int shift = 12;
+
+// Pack Bits
+  //packedVal |= ((etSum->hwPt()     & 0xfff)   << shift);
+
+  //towercount takes 13 bits
+  packedVal |= ((etSum->hwPt()     & 0x1fff)   <<0);
 
   return packedVal;
 }
