@@ -172,7 +172,7 @@ long long l1t::GlobalScales::getLUT_CalMuEta(std::string lutName, int element) c
    if(element < (int)m_lut_CalMuEta.find(lutName)->second.size()) {
      value = m_lut_CalMuEta.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for CalMuEta LUT (" << lutName <<") size = " << m_lut_CalMuEta.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for CalMuEta LUT (" << lutName <<") size = " << m_lut_CalMuEta.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -184,7 +184,7 @@ long long l1t::GlobalScales::getLUT_CalMuPhi(std::string lutName, int element) c
    if(element < (int)m_lut_CalMuPhi.find(lutName)->second.size()) {
      value = m_lut_CalMuPhi.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for CalMuPhi LUT (" << lutName <<") size = " << m_lut_CalMuPhi.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for CalMuPhi LUT (" << lutName <<") size = " << m_lut_CalMuPhi.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -205,7 +205,7 @@ long long l1t::GlobalScales::getLUT_DeltaEta(std::string lutName, int element) c
 
       //check again
       if(m_lut_DeltaEta.find(name) == m_lut_DeltaEta.end()) {
-           std::cout << "Warning: No LUT by name "<< lutName << " or " << name << " exists! " << std::endl;
+           edm::LogError("GlobalScales") << "Warning: No LUT by name "<< lutName << " or " << name << " exists! " << std::endl;
 	   return value;
       } else {
            lutName = name;
@@ -216,7 +216,7 @@ long long l1t::GlobalScales::getLUT_DeltaEta(std::string lutName, int element) c
    if(element < (int)m_lut_DeltaEta.find(lutName)->second.size()) {
      value = m_lut_DeltaEta.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for DeltaEta LUT (" << lutName <<") size = " << m_lut_DeltaEta.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for DeltaEta LUT (" << lutName <<") size = " << m_lut_DeltaEta.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -238,7 +238,7 @@ unsigned int l1t::GlobalScales::getPrec_DeltaEta(std::string lutName) const
       if(m_Prec_DeltaEta.find(name) != m_Prec_DeltaEta.end()) {
            value = m_Prec_DeltaEta.find(name)->second;
       } else {
-           std::cout << "Warning: LUT " << lutName << " for DeltaEta not found" << std::endl;
+           edm::LogError("GlobalScales") << "Warning: LUT " << lutName << " for DeltaEta not found" << std::endl;
       }
    }
    return value;
@@ -260,7 +260,7 @@ long long l1t::GlobalScales::getLUT_DeltaPhi(std::string lutName, int element) c
 
       //check again
       if(m_lut_DeltaPhi.find(name) == m_lut_DeltaPhi.end()) {
-           std::cout << "Warning: No LUT by name "<< lutName << " or " << name << " exists! " << std::endl;
+           edm::LogError("GlobalScales") << "Warning: No LUT by name "<< lutName << " or " << name << " exists! " << std::endl;
 	   return value;
       } else {
            lutName = name;
@@ -271,7 +271,7 @@ long long l1t::GlobalScales::getLUT_DeltaPhi(std::string lutName, int element) c
    if(element < (int)m_lut_DeltaPhi.find(lutName)->second.size()) {
      value = m_lut_DeltaPhi.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for DeltaPhi LUT (" << lutName <<") size = " << m_lut_DeltaPhi.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for DeltaPhi LUT (" << lutName <<") size = " << m_lut_DeltaPhi.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -293,7 +293,7 @@ unsigned int l1t::GlobalScales::getPrec_DeltaPhi(std::string lutName) const
       if(m_Prec_DeltaPhi.find(name) != m_Prec_DeltaPhi.end()) {
            value = m_Prec_DeltaPhi.find(name)->second;
       } else {
-           std::cout << "Warning: LUT " << lutName << " for DeltaPhi not found" << std::endl;
+           edm::LogError("GlobalScales") << "Warning: LUT " << lutName << " for DeltaPhi not found" << std::endl;
       }
    }
    return value;
@@ -307,7 +307,7 @@ long long l1t::GlobalScales::getLUT_Pt(std::string lutName, int element) const
    if(element < (int)m_lut_Pt.find(lutName)->second.size()) {
      value = m_lut_Pt.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for Pt LUT (" << lutName <<") size = " << m_lut_Pt.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for Pt LUT (" << lutName <<") size = " << m_lut_Pt.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -318,7 +318,7 @@ unsigned int l1t::GlobalScales::getPrec_Pt(std::string lutName) const
    if(m_Prec_Pt.find(lutName) != m_Prec_Pt.end()) {
      value = m_Prec_Pt.find(lutName)->second;
    } else {
-     std::cout << "Warning: LUT " << lutName << " for Pt not found" << std::endl;
+     edm::LogError("GlobalScales") << "Warning: LUT " << lutName << " for Pt not found" << std::endl;
    }
    return value;
 }
@@ -339,7 +339,7 @@ long long l1t::GlobalScales::getLUT_DeltaEta_Cosh(std::string lutName, int eleme
 
       //check again
       if(m_lut_Cosh.find(name) == m_lut_Cosh.end()) {
-           std::cout << "Warning: No LUT by name "<< lutName << " or " << name << " exists! " << std::endl;
+           edm::LogError("GlobalScales") << "Warning: No LUT by name "<< lutName << " or " << name << " exists! " << std::endl;
 	   return value;
       } else {
            lutName = name;
@@ -349,7 +349,7 @@ long long l1t::GlobalScales::getLUT_DeltaEta_Cosh(std::string lutName, int eleme
    if(element < (int)m_lut_Cosh.find(lutName)->second.size()) {
      value = m_lut_Cosh.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for Cosh LUT (" << lutName <<") size = " << m_lut_Cosh.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for Cosh LUT (" << lutName <<") size = " << m_lut_Cosh.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -371,7 +371,7 @@ unsigned int l1t::GlobalScales::getPrec_DeltaEta_Cosh(std::string lutName) const
       if(m_Prec_Cosh.find(name) != m_Prec_Cosh.end()) {
            value = m_Prec_Cosh.find(name)->second;
       } else {
-           std::cout << "Warning: LUT " << lutName << " for Cosh not found" << std::endl;
+           edm::LogError("GlobalScales") << "Warning: LUT " << lutName << " for Cosh not found" << std::endl;
       }
    }
    return value;
@@ -392,7 +392,7 @@ long long l1t::GlobalScales::getLUT_DeltaPhi_Cos(std::string lutName, int elemen
 
       //check again
       if(m_lut_Cos.find(name) == m_lut_Cos.end()) {
-           std::cout << "Warning: No LUT by name "<< lutName << " or " << name << " exists! " << std::endl;
+           edm::LogError("GlobalScales") << "Warning: No LUT by name "<< lutName << " or " << name << " exists! " << std::endl;
 	   return value;
       } else {
            lutName = name;
@@ -402,7 +402,7 @@ long long l1t::GlobalScales::getLUT_DeltaPhi_Cos(std::string lutName, int elemen
    if(element < (int)m_lut_Cos.find(lutName)->second.size()) {
      value = m_lut_Cos.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for Cos LUT (" << lutName <<") size = " << m_lut_Cos.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for Cos LUT (" << lutName <<") size = " << m_lut_Cos.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -413,14 +413,14 @@ long long l1t::GlobalScales::getLUT_Cos(std::string lutName, int element) const
 
    //first check whether this LUT exists
    if(m_lut_Cos.find(lutName) == m_lut_Cos.end()) {
-     std::cout << "Warning: No LUT by name "<< lutName << " exists! " << std::endl;
+     edm::LogError("GlobalScales") << "Warning: No LUT by name "<< lutName << " exists! " << std::endl;
      return value;
    }
 
    if(element < (int)m_lut_Cos.find(lutName)->second.size()) {
      value = m_lut_Cos.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for Cos LUT (" << lutName <<") size = " << m_lut_Cos.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for Cos LUT (" << lutName <<") size = " << m_lut_Cos.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -431,14 +431,14 @@ long long l1t::GlobalScales::getLUT_Sin(std::string lutName, int element) const
 
    //first check whether this LUT exists
    if(m_lut_Sin.find(lutName) == m_lut_Sin.end()) {
-     std::cout << "Warning: No LUT by name "<< lutName << " exists! " << std::endl;
+     edm::LogError("GlobalScales") << "Warning: No LUT by name "<< lutName << " exists! " << std::endl;
      return value;
    }
 
    if(element < (int)m_lut_Sin.find(lutName)->second.size()) {
      value = m_lut_Sin.find(lutName)->second.at(element);
    } else {
-     std::cout << "Warning: Element Requested " << element << " too large for Sin LUT (" << lutName <<") size = " << m_lut_Sin.find(lutName)->second.size() << std::endl;
+     edm::LogError("GlobalScales") << "Warning: Element Requested " << element << " too large for Sin LUT (" << lutName <<") size = " << m_lut_Sin.find(lutName)->second.size() << std::endl;
    }
    return value;
 }
@@ -461,7 +461,7 @@ unsigned int l1t::GlobalScales::getPrec_DeltaPhi_Cos(std::string lutName) const
       if(m_Prec_Cos.find(name) != m_Prec_Cos.end()) {
            value = m_Prec_Cos.find(name)->second;
       } else {
-           std::cout << "Warning: LUT " << lutName << " for Cos not found" << std::endl;
+           edm::LogError("GlobalScales") << "Warning: LUT " << lutName << " for Cos not found" << std::endl;
       }
    }
    return value;
@@ -474,7 +474,7 @@ unsigned int l1t::GlobalScales::getPrec_Cos(std::string lutName) const
    if(m_Prec_Sin.find(lutName) != m_Prec_Sin.end()) {
      value = m_Prec_Sin.find(lutName)->second;
    } else {
-     std::cout << "Warning: LUT " << lutName << " for Sin not found" << std::endl;
+     edm::LogError("GlobalScales") << "Warning: LUT " << lutName << " for Sin not found" << std::endl;
    }
    return value;
 }
@@ -486,7 +486,7 @@ unsigned int l1t::GlobalScales::getPrec_Sin(std::string lutName) const
    if(m_Prec_Sin.find(lutName) != m_Prec_Sin.end()) {
      value = m_Prec_Sin.find(lutName)->second;
    } else {
-     std::cout << "Warning: LUT " << lutName << " for Sin not found" << std::endl;
+     edm::LogError("GlobalScales") << "Warning: LUT " << lutName << " for Sin not found" << std::endl;
    }
    return value;
 }
