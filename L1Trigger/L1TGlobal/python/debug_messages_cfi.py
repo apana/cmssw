@@ -10,18 +10,18 @@ import FWCore.ParameterSet.Config as cms
 MessageLogger = cms.Service(
     "MessageLogger",
     destinations       =  cms.untracked.vstring(
-                           'cout','l1t_debug',
-                           'warnings', 
-                           'errors', 
-                           'infos', 
+                           'cout','l1t_debug','l1t_global',
+                           'warnings',
+                           'errors',
+                           'infos',
                            'debugs',
                            'cerr'
                            ),
     categories         = cms.untracked.vstring(
-                           'l1t', 'yellow',
-                           'FwkJob', 
-                           'FwkReport', 
-                           'FwkSummary', 
+                           'l1t', 'yellow','L1TGlobalSummary',
+                           'FwkJob',
+                           'FwkReport',
+                           'FwkSummary',
                            'Root_NoDictionary'),
     debugModules       = cms.untracked.vstring('*'),
 
@@ -33,9 +33,22 @@ MessageLogger = cms.Service(
        default = cms.untracked.PSet (
           limit = cms.untracked.int32(0)
        ),
+       L1TGlobalSummary = cms.untracked.PSet(
+            limit = cms.untracked.int32(100000)
+       ),
        l1t = cms.untracked.PSet (
           limit = cms.untracked.int32(100)
        )
+    ),
+    l1t_global = cms.untracked.PSet(
+        placeholder = cms.untracked.bool(True)
+        ## default = cms.untracked.PSet(
+        ##     limit = cms.untracked.int32(0)
+        ## ),
+        ## L1TGlobalSummary = cms.untracked.PSet(
+        ##     limit = cms.untracked.int32(100000)
+        ## ),
+        ## threshold = cms.untracked.string('DEBUG')
     ),
     suppressInfo = cms.untracked.vstring(),
     debugs = cms.untracked.PSet(
