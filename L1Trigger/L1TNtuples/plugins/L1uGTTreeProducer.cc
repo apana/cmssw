@@ -29,8 +29,8 @@ class L1uGTTreeProducer : public edm::EDAnalyzer {
 public:
   explicit L1uGTTreeProducer(edm::ParameterSet const &);
   ~L1uGTTreeProducer();
-  
-  
+
+
 private:
   virtual void beginJob() override;
   virtual void analyze(edm::Event const &, edm::EventSetup const &) override;
@@ -39,30 +39,41 @@ private:
 private:
   // output file
   edm::Service<TFileService> fs_;
-  
+
   // pointers to the objects that will be stored as branches within the tree
   GlobalAlgBlk const * results_;
+  GlobalAlgBlk const *results_m2_, *results_m1_, *results_0_, *results_p1_, *results_p2_;
 
   // tree
   TTree * tree_;
- 
+
   // EDM input tokens
   const edm::EDGetTokenT<GlobalAlgBlkBxCollection> ugt_token_;
+  bool storeAllBx_;
 
   // L1 uGT menu
   unsigned long long cache_id_;
+
 };
 
 
 
 L1uGTTreeProducer::L1uGTTreeProducer(edm::ParameterSet const & config) :
   results_(NULL), tree_(NULL),
-  ugt_token_( consumes<GlobalAlgBlkBxCollection>(config.getParameter<edm::InputTag>("ugtToken"))),
+  ugt_token_ ( consumes<GlobalAlgBlkBxCollection>(config.getParameter<edm::InputTag>("ugtToken"))),
+  storeAllBx_( config.getParameter<bool>("storeAllBx")),
   cache_id_( 0 )
 {
   // set up the TTree and its branches
   tree_ = fs_->make<TTree>("L1uGTTree", "L1uGTTree");
   tree_->Branch("L1uGT", "GlobalAlgBlk", & results_, 32000, 3);
+  if (storeAllBx_){
+    tree_->Branch("L1uGT_bx_minus2", "GlobalAlgBlk", & results_m2_, 32000, 3);
+    tree_->Branch("L1uGT_bx_minus1", "GlobalAlgBlk", & results_m1_, 32000, 3);
+    tree_->Branch("L1uGT_bx_central","GlobalAlgBlk", & results_0_ , 32000, 3);
+    tree_->Branch("L1uGT_bx_plus1",  "GlobalAlgBlk", & results_p1_, 32000, 3);
+    tree_->Branch("L1uGT_bx_plus2",  "GlobalAlgBlk", & results_p2_, 32000, 3);
+  }
 }
 
 
@@ -101,19 +112,38 @@ L1uGTTreeProducer::analyze(edm::Event const & event, edm::EventSetup const & set
 
   if (ugt.isValid()) {
     results_ = & ugt->at(0, 0);
+
+    if (storeAllBx_){
+      int firstBX=ugt->getFirstBX();
+      int lastBX =ugt->getLastBX();
+      std::cout << "ugt bxs: " << firstBX << "\t" << lastBX << std::endl;
+      for ( int ibx=firstBX; ibx<=lastBX; ++ibx) {
+	if ( ibx == -2 ){
+	  results_m2_  = & ugt->at(ibx, 0);
+	}else if ( ibx == -1 ) {
+	  results_m1_  = & ugt->at(ibx, 0);
+	}else if ( ibx == 0 ) {
+	  results_0_ = & ugt->at(ibx, 0);
+	}else if ( ibx == 1 ) {
+	  results_p1_   = & ugt->at(ibx, 0);
+	}else if ( ibx == 2 ) {
+	  results_p2_   = & ugt->at(ibx, 0);
+	}
+      }
+    }
   }
 
   tree_->Fill();
 }
 
 // ------------ method called once each job just before starting event loop  ------------
-void 
+void
 L1uGTTreeProducer::beginJob(void)
 {
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
-void 
+void
 L1uGTTreeProducer::endJob() {
 }
 
