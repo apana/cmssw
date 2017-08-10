@@ -116,7 +116,7 @@ L1uGTTreeProducer::analyze(edm::Event const & event, edm::EventSetup const & set
     if (storeAllBx_){
       int firstBX=ugt->getFirstBX();
       int lastBX =ugt->getLastBX();
-      std::cout << "ugt bxs: " << firstBX << "\t" << lastBX << std::endl;
+      //std::cout << "ugt bxs: " << firstBX << "\t" << lastBX << std::endl;
       for ( int ibx=firstBX; ibx<=lastBX; ++ibx) {
 	if ( ibx == -2 ){
 	  results_m2_  = & ugt->at(ibx, 0);
