@@ -75,15 +75,6 @@ hltBPHmonitoring.tracks       = cms.InputTag("generalTracks") # tracks??
 hltBPHmonitoring.offlinePVs      = cms.InputTag("offlinePrimaryVertices") # PVs
 hltBPHmonitoring.beamSpot = cms.InputTag("offlineBeamSpot") # 
 
-hltBPHmonitoring.beamSpot = cms.EDProducer('BeamSpotProducer')
-process.GlobalTag.toGet.append(
-   cms.PSet(
-       record  = cms.string('BeamSpotObjectsRcd'),
-       tag     = cms.string('BeamSpotObjects_byLS_031c09_TEST'),
-       connect = cms.string('frontier://FrontierPrep/CMS_CONDITIONS')
-   )
-)
-
 hltBPHmonitoring.muons     = cms.InputTag("muons") # 
 hltBPHmonitoring.photons     = cms.InputTag("photons") # 
 hltBPHmonitoring.hltTriggerSummaryAOD   = cms.InputTag("hltTriggerSummaryAOD","","HLT")
