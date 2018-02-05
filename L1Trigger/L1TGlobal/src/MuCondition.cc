@@ -404,7 +404,7 @@ const bool l1t::MuCondition::checkObjectParameter(const int iCondition, const l1
       << "\n\t indexLow        = 0x " << objPar.indexLow
       << "\n\t requestIso      = 0x " << objPar.requestIso
       << "\n\t enableIso       = 0x " << objPar.enableIso
-      << "\n\t etaRange        = 0x " << objPar.etaRange
+      << "\n\t CCLA etaRange        = 0x " << objPar.etaRange
       << "\n\t phiLow          = 0x " << objPar.phiLow
       << "\n\t phiHigh         = 0x " << objPar.phiHigh
       << "\n\t phiWindow1Lower = 0x " << objPar.phiWindow1Lower
@@ -440,10 +440,30 @@ const bool l1t::MuCondition::checkObjectParameter(const int iCondition, const l1
       }
 
     // check eta
-    if( !checkRangeEta(cand.hwEtaAtVtx(), objPar.etaWindow1Lower, objPar.etaWindow1Upper, objPar.etaWindow2Lower, objPar.etaWindow2Upper, 8) ){
-      LogDebug("L1TGlobal") << "\t\t l1t::Candidate failed checkRange(eta)" << std::endl;
-      return false;
-    }
+      std::vector<std::pair<unsigned int, unsigned int> > etaWindows = objPar.etaWindows;
+      LogDebug("L1TGlobal")
+	<< "\n l1t::Muon -- Number of Eta Windows " << etaWindows.size() << std::endl;
+
+      bool satisfyEtaCond=true;
+      for(std::vector<std::pair<unsigned int, unsigned int> >::iterator it = 
+	    etaWindows.begin(); it != etaWindows.end(); ++it) {
+	satisfyEtaCond=false;
+	std::pair<unsigned int, unsigned int> etaWindow = *it;
+	unsigned int etaWindowLower = etaWindow.first;
+	unsigned int etaWindowUpper = etaWindow.second;
+	LogDebug("L1TGlobal")
+	  << "\n l1t::Muon"
+	  << "\n\t etaWindowLower = 0x " << etaWindowLower
+	  << "\n\t etaWindowUpper = 0x " << etaWindowUpper
+	  << std::endl;
+	satisfyEtaCond = checkRangeEta(cand.hwEtaAtVtx(), etaWindowLower, etaWindowUpper, 8);
+	if (satisfyEtaCond) break;
+      }
+
+      if (! satisfyEtaCond ){
+	LogDebug("L1TGlobal") << "\t\t l1t::Candidate failed checkRange(eta)" << std::endl;
+	return false;
+      }
 
     // check phi
     if( !checkRangePhi(cand.hwPhiAtVtx(), objPar.phiWindow1Lower, objPar.phiWindow1Upper, objPar.phiWindow2Lower, objPar.phiWindow2Upper) ){

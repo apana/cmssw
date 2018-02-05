@@ -68,10 +68,7 @@ public:
       unsigned int isolationLUT;
       unsigned int qualityLUT;     
 
-      unsigned int etaWindow1Lower;
-      unsigned int etaWindow1Upper;
-      unsigned int etaWindow2Lower;
-      unsigned int etaWindow2Upper;
+      std::vector<std::pair<unsigned int, unsigned int> > etaWindows;
 
       unsigned int phiWindow1Lower;
       unsigned int phiWindow1Upper;

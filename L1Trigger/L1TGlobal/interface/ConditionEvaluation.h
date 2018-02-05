@@ -119,10 +119,14 @@ protected:
     /// check if a bit with a given number is set in a mask
     template<class Type1> const bool checkBit(const Type1& mask, const unsigned int bitNumber) const;
 
-    /// check if a value is in a given range and outside of a veto range
+    /// check if a value is in a given range or outside of a veto range
+    // template<class Type1> const bool checkRangeEta(const unsigned int bitNumber, 
+    // 						   const Type1& W1beginR, const Type1& W1endR, 
+    // 						   const Type1& W2beginR, const Type1& W2endR,
+    // 						   const unsigned int nEtaBits ) const;
+    // 
     template<class Type1> const bool checkRangeEta(const unsigned int bitNumber, 
-						   const Type1& W1beginR, const Type1& W1endR, 
-						   const Type1& W2beginR, const Type1& W2endR,
+						   const Type1& WbeginR, const Type1& WendR, 
 						   const unsigned int nEtaBits ) const;
 
     /// check if a value is in a given range and outside of a veto range
@@ -254,32 +258,120 @@ template<class Type1> const bool ConditionEvaluation::checkBit(const Type1& mask
 
 
 /// check if a value is in a given range and outside of a veto range
+//  template<class Type1> const bool ConditionEvaluation::checkRangeEta(const unsigned int bitNumber, 
+// 								     const Type1& W1beginR, const Type1& W1endR, 
+// 								     const Type1& W2beginR, const Type1& W2endR,
+// 								     const unsigned int nEtaBits) const {
+// 
+//   // set condtion to true if beginR==endR = default -1
+//   if( W1beginR==W1endR && W1beginR==(Type1)-1 ){
+//     return true;
+//   }
+// 
+//   unsigned int W1diff1 = W1endR - W1beginR;
+//   unsigned int W1diff2 = bitNumber - W1beginR;
+//   unsigned int W1diff3 = W1endR - bitNumber;
+// 
+//   bool W1cond1 = ( (W1diff1>>nEtaBits) & 1 ) ? false : true;
+//   bool W1cond2 = ( (W1diff2>>nEtaBits) & 1 ) ? false : true;
+//   bool W1cond3 = ( (W1diff3>>nEtaBits) & 1 ) ? false : true;
+// 
+//   // check if value is in range
+//   // for begin <= end takes [begin, end]
+//   // for begin >= end takes [begin, end] over zero angle!
+//   bool passWindow1 = false;
+//   if( W1cond1 && (W1cond2 && W1cond3 ) )      passWindow1=true;
+//   else if( !W1cond1 && (W1cond2 || W1cond3) ) passWindow1=true;
+//   else{
+//     passWindow1 = false;
+//   }
+// 
+// 
+// 
+//   LogDebug("l1t|Global")
+//     << "\n l1t::ConditionEvaluation"
+//     << "\n\t bitNumber = " << bitNumber
+//     << "\n\t W1beginR = " << W1beginR
+//     << "\n\t W1endR   = " << W1endR
+//     << "\n\t W1diff1 = " << W1diff1
+//     << "\n\t W1cond1 = " << W1cond1
+//     << "\n\t W1diff2 = " << W1diff2
+//     << "\n\t W1cond2 = " << W1cond2
+//     << "\n\t W1diff3 = " << W1diff3
+//     << "\n\t W1cond3 = " << W1cond3
+//     << "\n\t passWindow1 = " << passWindow1
+//     << std::endl;
+// 
+// 
+//   if( W2beginR==W2endR && W2beginR==(Type1)-1 ){
+//     return passWindow1;
+//   }
+// 
+// 
+//   unsigned int W2diff1 = W2endR - W2beginR;
+//   unsigned int W2diff2 = bitNumber - W2beginR;
+//   unsigned int W2diff3 = W2endR - bitNumber;
+// 
+//   bool W2cond1 = ( (W2diff1>>nEtaBits) & 1 ) ? false : true;
+//   bool W2cond2 = ( (W2diff2>>nEtaBits) & 1 ) ? false : true;
+//   bool W2cond3 = ( (W2diff3>>nEtaBits) & 1 ) ? false : true;
+// 
+//   bool passWindow2 = false;
+//   if( W2cond1 && (W2cond2 && W2cond3 ) )      passWindow2=true;
+//   else if( !W2cond1 && (W2cond2 || W2cond3) ) passWindow2=true;
+//   else{
+//     passWindow2 = false;
+//   }
+// 
+// 
+//   LogDebug("l1t|Global")
+//     << "\n\t W2beginR = " << W2beginR
+//     << "\n\t W2endR   = " << W2endR
+//     << "\n\t W2diff1 = " << W2diff1
+//     << "\n\t W2cond1 = " << W2cond1
+//     << "\n\t W2diff2 = " << W2diff2
+//     << "\n\t W2cond2 = " << W2cond2
+//     << "\n\t W2diff3 = " << W2diff3
+//     << "\n\t W2cond3 = " << W2cond3
+//     << "\n\t passWindow2 = " << passWindow2
+//     << "\n\t pass W1 || W2 = " << (passWindow1 || passWindow2)
+//     << std::endl;
+// 
+//   if( passWindow1 || passWindow2 ){
+//     return true;
+//   }
+//   else{
+//     return false;
+//   }
+// 
+//  }
+// 
+
  template<class Type1> const bool ConditionEvaluation::checkRangeEta(const unsigned int bitNumber, 
-								     const Type1& W1beginR, const Type1& W1endR, 
-								     const Type1& W2beginR, const Type1& W2endR,
+								     const Type1& WbeginR, const Type1& WendR, 
 								     const unsigned int nEtaBits) const {
 
   // set condtion to true if beginR==endR = default -1
-  if( W1beginR==W1endR && W1beginR==(Type1)-1 ){
+  if( WbeginR==WendR && WbeginR==(Type1)-1 ){
     return true;
   }
 
-  unsigned int W1diff1 = W1endR - W1beginR;
-  unsigned int W1diff2 = bitNumber - W1beginR;
-  unsigned int W1diff3 = W1endR - bitNumber;
+  unsigned int Wdiff1 = WendR - WbeginR;
+  unsigned int Wdiff2 = bitNumber - WbeginR;
+  unsigned int Wdiff3 = WendR - bitNumber;
 
-  bool W1cond1 = ( (W1diff1>>nEtaBits) & 1 ) ? false : true;
-  bool W1cond2 = ( (W1diff2>>nEtaBits) & 1 ) ? false : true;
-  bool W1cond3 = ( (W1diff3>>nEtaBits) & 1 ) ? false : true;
+  bool Wcond1 = ( (Wdiff1>>nEtaBits) & 1 ) ? false : true;
+  bool Wcond2 = ( (Wdiff2>>nEtaBits) & 1 ) ? false : true;
+  bool Wcond3 = ( (Wdiff3>>nEtaBits) & 1 ) ? false : true;
 
   // check if value is in range
   // for begin <= end takes [begin, end]
   // for begin >= end takes [begin, end] over zero angle!
-  bool passWindow1 = false;
-  if( W1cond1 && (W1cond2 && W1cond3 ) )      passWindow1=true;
-  else if( !W1cond1 && (W1cond2 || W1cond3) ) passWindow1=true;
+  bool passWindow = false;
+  if( Wcond1 && (Wcond2 && Wcond3 ) )      passWindow=true;
+  else if( !Wcond1 && (Wcond2 || Wcond3) ) passWindow=true;
   else{
-    passWindow1 = false;
+    passWindow = false;
   }
 
 
@@ -287,58 +379,18 @@ template<class Type1> const bool ConditionEvaluation::checkBit(const Type1& mask
   LogDebug("l1t|Global")
     << "\n l1t::ConditionEvaluation"
     << "\n\t bitNumber = " << bitNumber
-    << "\n\t W1beginR = " << W1beginR
-    << "\n\t W1endR   = " << W1endR
-    << "\n\t W1diff1 = " << W1diff1
-    << "\n\t W1cond1 = " << W1cond1
-    << "\n\t W1diff2 = " << W1diff2
-    << "\n\t W1cond2 = " << W1cond2
-    << "\n\t W1diff3 = " << W1diff3
-    << "\n\t W1cond3 = " << W1cond3
-    << "\n\t passWindow1 = " << passWindow1
+    << "\n\t WbeginR = " << WbeginR
+    << "\n\t WendR   = " << WendR
+    << "\n\t Wdiff1 = " << Wdiff1
+    << "\n\t Wcond1 = " << Wcond1
+    << "\n\t Wdiff2 = " << Wdiff2
+    << "\n\t Wcond2 = " << Wcond2
+    << "\n\t Wdiff3 = " << Wdiff3
+    << "\n\t Wcond3 = " << Wcond3
+    << "\n\t passWindow = " << passWindow
     << std::endl;
 
-
-  if( W2beginR==W2endR && W2beginR==(Type1)-1 ){
-    return passWindow1;
-  }
-
-
-  unsigned int W2diff1 = W2endR - W2beginR;
-  unsigned int W2diff2 = bitNumber - W2beginR;
-  unsigned int W2diff3 = W2endR - bitNumber;
-
-  bool W2cond1 = ( (W2diff1>>nEtaBits) & 1 ) ? false : true;
-  bool W2cond2 = ( (W2diff2>>nEtaBits) & 1 ) ? false : true;
-  bool W2cond3 = ( (W2diff3>>nEtaBits) & 1 ) ? false : true;
-
-  bool passWindow2 = false;
-  if( W2cond1 && (W2cond2 && W2cond3 ) )      passWindow2=true;
-  else if( !W2cond1 && (W2cond2 || W2cond3) ) passWindow2=true;
-  else{
-    passWindow2 = false;
-  }
-
-
-  LogDebug("l1t|Global")
-    << "\n\t W2beginR = " << W2beginR
-    << "\n\t W2endR   = " << W2endR
-    << "\n\t W2diff1 = " << W2diff1
-    << "\n\t W2cond1 = " << W2cond1
-    << "\n\t W2diff2 = " << W2diff2
-    << "\n\t W2cond2 = " << W2cond2
-    << "\n\t W2diff3 = " << W2diff3
-    << "\n\t W2cond3 = " << W2cond3
-    << "\n\t passWindow2 = " << passWindow2
-    << "\n\t pass W1 || W2 = " << (passWindow1 || passWindow2)
-    << std::endl;
-
-  if( passWindow1 || passWindow2 ){
-    return true;
-  }
-  else{
-    return false;
-  }
+  return passWindow;
 
  }
 

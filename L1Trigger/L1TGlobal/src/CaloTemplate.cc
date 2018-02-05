@@ -112,10 +112,22 @@ void CaloTemplate::print(std::ostream& myCout) const
         << std::hex << m_objectParameter[i].indexLow << std::endl;
         myCout << "    indexHigh      = "
         << std::hex << m_objectParameter[i].indexHigh << std::endl;
-        myCout << "    etaRange          = "
-        << std::hex << m_objectParameter[i].etaRange << std::endl;
-        myCout << "    phiRange          = "
-        << std::hex << m_objectParameter[i].phiRange << std::endl;
+	myCout << "    phiWindow1Lower   ="
+	       << std::hex << m_objectParameter[i].phiWindow1Lower << std::endl;
+	myCout << "    phiWindow1Upper   ="
+	       << std::hex << m_objectParameter[i].phiWindow1Upper << std::endl;
+	myCout << "    phiWindow2Lower   ="
+	       << std::hex << m_objectParameter[i].phiWindow2Lower << std::endl;
+	myCout << "    phiWindow2Upper   ="
+	       << std::hex << m_objectParameter[i].phiWindow2Upper << std::endl;
+	myCout << "    etaWindow(s)      = "; 
+	std::vector<std::pair<unsigned int, unsigned int> > etaWindows = m_objectParameter[i].etaWindows;
+	for(std::vector<std::pair<unsigned int, unsigned int> >::iterator it = 
+	      etaWindows.begin(); it != etaWindows.end(); ++it) {
+	  std::pair<unsigned int, unsigned int> etaWindow = *it;
+	  myCout << etaWindow.first << " - " << etaWindow.second << "  ";
+	}
+	myCout << std::endl;
         myCout << "    isolationLUT      = "
         << std::hex << m_objectParameter[i].isolationLUT << std::endl;
         myCout << "    qualityLUT      = "

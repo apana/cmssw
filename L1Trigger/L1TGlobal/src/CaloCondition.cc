@@ -538,7 +538,26 @@ const bool l1t::CaloCondition::checkObjectParameter(const int iCondition, const 
     }
 
     // check eta
-    if( !checkRangeEta(cand.hwEta(), objPar.etaWindow1Lower, objPar.etaWindow1Upper, objPar.etaWindow2Lower, objPar.etaWindow2Upper, 7) ){
+    std::vector<std::pair<unsigned int, unsigned int> > etaWindows = objPar.etaWindows;
+    LogDebug("L1TGlobal")
+      << "\n l1t::Calo -- Number of Eta Windows " << etaWindows.size() << std::endl;
+    bool satisfyEtaCond=true;
+    for(std::vector<std::pair<unsigned int, unsigned int> >::iterator it = 
+	  etaWindows.begin(); it != etaWindows.end(); ++it) {
+      satisfyEtaCond=false;
+      std::pair<unsigned int, unsigned int> etaWindow = *it;
+      unsigned int etaWindowLower = etaWindow.first;
+      unsigned int etaWindowUpper = etaWindow.second;
+      LogDebug("L1TGlobal")
+	<< "\n l1t::Calo"
+	<< "\n\t etaWindowLower = 0x " << etaWindowLower
+	<< "\n\t etaWindowUpper = 0x " << etaWindowUpper
+	<< std::endl;
+      satisfyEtaCond = checkRangeEta(cand.hwEta(), etaWindowLower, etaWindowUpper, 7);
+      if (satisfyEtaCond) break;
+    }
+
+    if (! satisfyEtaCond ){
       LogDebug("L1TGlobal") << "\t\t l1t::Candidate failed checkRange(eta)" << std::endl;
       return false;
     }
