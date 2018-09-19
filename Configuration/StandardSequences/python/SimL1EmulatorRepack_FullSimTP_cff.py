@@ -48,6 +48,12 @@ else:
     unpackHcal = EventFilter.HcalRawToDigi.HcalRawToDigi_cfi.hcalDigis.clone(
         InputLabel = cms.InputTag( 'rawDataCollector', processName=cms.InputTag.skipCurrentProcess()))
 
+    # unpack of inputs to uGT:
+    # #################################
+    import EventFilter.L1TRawToDigi.gtStage2Digis_cfi
+    unpackGtStage2 = EventFilter.L1TRawToDigi.gtStage2Digis_cfi.gtStage2Digis.clone(
+        InputLabel = cms.InputTag( 'rawDataCollector', processName=cms.InputTag.skipCurrentProcess()))    
+
     # Second, Re-Emulate the entire L1T
 
     from SimCalorimetry.EcalTrigPrimProducers.ecalTriggerPrimitiveDigis_cfi import *
@@ -114,7 +120,7 @@ else:
 
 
     
-    SimL1Emulator = cms.Sequence(unpackEcal+unpackHcal+unpackCSC+unpackDT+unpackRPC+unpackEmtf+unpackCsctf+unpackBmtf
+    SimL1Emulator = cms.Sequence(unpackEcal+unpackHcal+unpackCSC+unpackDT+unpackRPC+unpackEmtf+unpackCsctf+unpackBmtf+unpackGtStage2
                                  +simEcalTriggerPrimitiveDigis
                                  +simHcalTriggerPrimitiveDigis
                                  +SimL1EmulatorCore+packCaloStage2

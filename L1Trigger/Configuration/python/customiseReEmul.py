@@ -177,6 +177,53 @@ def L1TReEmulFromRAWCalouGT(process):
     process.simGtStage2Digis.MuonInputTag   = cms.InputTag("gtStage2Digis","Muon")
     return process 
 
+def L1TReEmulFromRAWuseUnpackedExt(process):
+    if not hasattr(process, "simGtStage2Digis"):
+        print "# Setting up L1TReEmul sequence  "
+        L1TReEmulFromRAW(process)
+
+    UNPACKEDGT="NotFound"
+    if hasattr(process, "unpackGtStage2"):
+        UNPACKEDGT="unpackGtStage2"
+    elif hasattr(process, "gtStage2Digis"):
+        UNPACKEDGT="gtStage2Digis"
+
+    
+    if UNPACKEDGT=="NotFound":
+        print "# Configuration file is not setup unpack a uGT collection with label \"unpackGtStage2\" or \"gtStage2Digis\". This will likely cause some problems."
+
+    process.simGtStage2Digis.ExtInputTag   = cms.InputTag(UNPACKEDGT)
+
+    if hasattr(process, "packGtStage2"):
+        print "# Putting unpacked External digis into RePacked RAW"
+        process.packGtStage2.ExtInputTag = cms.InputTag(UNPACKEDGT)
+
+    return process 
+
+def L1TReEmulFromRAWuseUnpackedExtAndEmul5BX(process):
+    if not hasattr(process, "simGtStage2Digis"):
+        print "# Setting up L1TReEmul sequence  "
+        L1TReEmulFromRAW(process)
+
+    UNPACKEDGT="NotFound"
+    if hasattr(process, "unpackGtStage2"):
+        UNPACKEDGT="unpackGtStage2"
+    elif hasattr(process, "gtStage2Digis"):
+        UNPACKEDGT="gtStage2Digis"
+
+    
+    if UNPACKEDGT=="NotFound":
+        print "# Configuration file is not setup unpack a uGT collection with label \"unpackGtStage2\" or \"gtStage2Digis\". This will likely cause some problems."
+        
+    process.simGtStage2Digis.ExtInputTag   = cms.InputTag(UNPACKEDGT)
+    process.simGtStage2Digis.EmulateBxInEvent = 5
+
+    if hasattr(process, "packGtStage2"):
+        print "# Putting unpacked External digis into RePacked RAW"
+        process.packGtStage2.ExtInputTag = cms.InputTag(UNPACKEDGT)
+
+    return process 
+
 
 def L1TReEmulMCFromRAW(process):
     L1TReEmulFromRAW(process)
