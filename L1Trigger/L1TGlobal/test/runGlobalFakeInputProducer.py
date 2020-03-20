@@ -77,9 +77,13 @@ process.maxEvents = cms.untracked.PSet(
 process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring(),
     fileNames = cms.untracked.vstring(
-        "/store/mc/PhaseIFall16DR/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/GEN-SIM-RAW/FlatPU28to62HcalNZSRAW_81X_upgrade2017_realistic_v26-v1/110000/444C2036-84FC-E611-A86D-02163E01433C.root",
-        "/store/mc/PhaseIFall16DR/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/GEN-SIM-RAW/FlatPU28to62HcalNZSRAW_81X_upgrade2017_realistic_v26-v1/110000/E0A9F101-84FC-E611-9B29-02163E01A4AA.root",
-        "/store/mc/PhaseIFall16DR/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/GEN-SIM-RAW/FlatPU28to62HcalNZSRAW_81X_upgrade2017_realistic_v26-v1/110000/563E9F08-84FC-E611-BEA2-02163E01A2F7.root",
+        "/store/mc/RunIIAutumn18DR/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/GEN-SIM-RAW/NZSFlatPU28to62_102X_upgrade2018_realistic_v15_ext1-v1/110000/C88DE46C-E660-644C-93FB-BB8EB1698523.root",
+        "/store/mc/RunIIAutumn18DR/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/GEN-SIM-RAW/NZSFlatPU28to62_102X_upgrade2018_realistic_v15_ext1-v1/110000/5614D2B8-01ED-E640-A9EE-B58E7DD8D97E.root",
+        "/store/mc/RunIIAutumn18DR/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/GEN-SIM-RAW/NZSFlatPU28to62_102X_upgrade2018_realistic_v15_ext1-v1/110000/F2A07311-02D7-4E45-9ABF-D510A860CBDB.root",
+        "/store/mc/RunIIAutumn18DR/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/GEN-SIM-RAW/NZSFlatPU28to62_102X_upgrade2018_realistic_v15_ext1-v1/110000/5E3D71BF-F900-7D45-B95E-1E8ED5CB58E9.root"
+        ## "/store/mc/PhaseIFall16DR/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/GEN-SIM-RAW/FlatPU28to62HcalNZSRAW_81X_upgrade2017_realistic_v26-v1/110000/444C2036-84FC-E611-A86D-02163E01433C.root",
+        ## "/store/mc/PhaseIFall16DR/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/GEN-SIM-RAW/FlatPU28to62HcalNZSRAW_81X_upgrade2017_realistic_v26-v1/110000/E0A9F101-84FC-E611-9B29-02163E01A4AA.root",
+        ## "/store/mc/PhaseIFall16DR/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/GEN-SIM-RAW/FlatPU28to62HcalNZSRAW_81X_upgrade2017_realistic_v26-v1/110000/563E9F08-84FC-E611-BEA2-02163E01A2F7.root",
         ## "/store/mc/PhaseIFall16DR/QCD_Pt_50to80_TuneCUETP8M1_13TeV_pythia8/GEN-SIM-RAW/FlatPU28to62HcalNZSRAW_81X_upgrade2017_realistic_v26-v2/120002/C023E584-8700-E711-AE30-002590747E28.root",
         ## "/store/mc/RunIISpring16DR80/TT_TuneCUETP8M1_13TeV-powheg-pythia8/GEN-SIM-RAW/FlatPU20to70HcalNZSRAW_withHLT_80X_mcRun2_asymptotic_v14_ext3-v1/50000/CE22C0CB-9965-E611-9101-0025905C4262.root",
         ## "/store/mc/RunIISpring16DR80/TT_TuneCUETP8M1_13TeV-powheg-pythia8/GEN-SIM-RAW/FlatPU20to70HcalNZSRAW_withHLT_80X_mcRun2_asymptotic_v14_ext3-v1/50000/D6D4CAF2-AD65-E611-9642-001EC94BA169.root",
@@ -115,7 +119,7 @@ process.TFileService.fileName = cms.string('l1t_histos.root')
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
 ## process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:upgradePLS1', '')
-process.GlobalTag = GlobalTag(process.GlobalTag, '90X_upgrade2017_realistic_PerfectEcalIc_EGM_PFCalib', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '110X_upgrade2018_realistic_v9', '')
 ## auto:upgradePLS1
 ## 81X_upgrade2017_realistic_v26
 ## 80X_mcRun2_asymptotic_v14
@@ -228,7 +232,7 @@ process.load("L1Trigger.L1TGlobal.TriggerMenu_cff")
 
 ## xmlMenu="L1Menu_test_mass_trv.xml"
 ##xmlMenu="L1Menu_BPH2017_v0.xml"
-xmlMenu="L1Menu_test_mass_tbpt.xml"
+xmlMenu="L1Menu_Collisions2018_v2_1_0-d2.xml"
 process.TriggerMenu.L1TriggerMenuFile = cms.string(xmlMenu)
 
 #process.menuDumper = cms.EDAnalyzer("L1TUtmTriggerMenuDumper")
